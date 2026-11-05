@@ -1,0 +1,707 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2685.7">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; -webkit-text-stroke: #000000}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Times; -webkit-text-stroke: #000000; min-height: 14.0px}
+    span.s1 {font-kerning: none}
+  </style>
+</head>
+<body>
+<p class="p1"><span class="s1">&lt;!DOCTYPE html&gt;</span></p>
+<p class="p1"><span class="s1">&lt;html lang="en"&gt;</span></p>
+<p class="p1"><span class="s1">&lt;head&gt;</span></p>
+<p class="p1"><span class="s1">&lt;meta charset="UTF-8"&gt;</span></p>
+<p class="p1"><span class="s1">&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</span></p>
+<p class="p1"><span class="s1">&lt;title&gt;MicroTask Platform Simulator&lt;/title&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;style&gt;</span></p>
+<p class="p1"><span class="s1">body{</span></p>
+<p class="p1"><span class="s1">    font-family:Arial,Helvetica,sans-serif;</span></p>
+<p class="p1"><span class="s1">    background:#f4f6f9;</span></p>
+<p class="p1"><span class="s1">    margin:0;</span></p>
+<p class="p1"><span class="s1">    padding:20px;</span></p>
+<p class="p1"><span class="s1">    color:#222;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">.container{</span></p>
+<p class="p1"><span class="s1">    max-width:1000px;</span></p>
+<p class="p1"><span class="s1">    margin:auto;</span></p>
+<p class="p1"><span class="s1">    background:white;</span></p>
+<p class="p1"><span class="s1">    border-radius:12px;</span></p>
+<p class="p1"><span class="s1">    padding:25px;</span></p>
+<p class="p1"><span class="s1">    box-shadow:0 3px 12px rgba(0,0,0,.12);</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">h1,h2,h3{</span></p>
+<p class="p1"><span class="s1">    margin-top:0;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">.hidden{</span></p>
+<p class="p1"><span class="s1">    display:none;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">.timer{</span></p>
+<p class="p1"><span class="s1">    font-size:30px;</span></p>
+<p class="p1"><span class="s1">    font-weight:bold;</span></p>
+<p class="p1"><span class="s1">    color:#c0392b;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">.banner{</span></p>
+<p class="p1"><span class="s1">    background:#ecf0f1;</span></p>
+<p class="p1"><span class="s1">    padding:15px;</span></p>
+<p class="p1"><span class="s1">    border-radius:8px;</span></p>
+<p class="p1"><span class="s1">    margin-bottom:20px;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">.stats{</span></p>
+<p class="p1"><span class="s1">    display:grid;</span></p>
+<p class="p1"><span class="s1">    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));</span></p>
+<p class="p1"><span class="s1">    gap:10px;</span></p>
+<p class="p1"><span class="s1">    margin-bottom:20px;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">.stat{</span></p>
+<p class="p1"><span class="s1">    background:#f8f8f8;</span></p>
+<p class="p1"><span class="s1">    border-radius:8px;</span></p>
+<p class="p1"><span class="s1">    padding:10px;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">.card{</span></p>
+<p class="p1"><span class="s1">    background:#fff;</span></p>
+<p class="p1"><span class="s1">    border:1px solid #ddd;</span></p>
+<p class="p1"><span class="s1">    border-radius:8px;</span></p>
+<p class="p1"><span class="s1">    padding:18px;</span></p>
+<p class="p1"><span class="s1">    margin-top:15px;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">button{</span></p>
+<p class="p1"><span class="s1">    width:100%;</span></p>
+<p class="p1"><span class="s1">    padding:12px;</span></p>
+<p class="p1"><span class="s1">    margin-top:8px;</span></p>
+<p class="p1"><span class="s1">    cursor:pointer;</span></p>
+<p class="p1"><span class="s1">    border:none;</span></p>
+<p class="p1"><span class="s1">    background:#2c7be5;</span></p>
+<p class="p1"><span class="s1">    color:white;</span></p>
+<p class="p1"><span class="s1">    border-radius:6px;</span></p>
+<p class="p1"><span class="s1">    font-size:15px;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">button:hover{</span></p>
+<p class="p1"><span class="s1">    background:#1f5fb5;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">input{</span></p>
+<p class="p1"><span class="s1">    width:100%;</span></p>
+<p class="p1"><span class="s1">    padding:10px;</span></p>
+<p class="p1"><span class="s1">    font-size:16px;</span></p>
+<p class="p1"><span class="s1">    margin-top:10px;</span></p>
+<p class="p1"><span class="s1">    box-sizing:border-box;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">.warning{</span></p>
+<p class="p1"><span class="s1">    color:#d35400;</span></p>
+<p class="p1"><span class="s1">    font-weight:bold;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">.error{</span></p>
+<p class="p1"><span class="s1">    color:#c0392b;</span></p>
+<p class="p1"><span class="s1">    font-weight:bold;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">.success{</span></p>
+<p class="p1"><span class="s1">    color:#27ae60;</span></p>
+<p class="p1"><span class="s1">    font-weight:bold;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">.center{</span></p>
+<p class="p1"><span class="s1">    text-align:center;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p1"><span class="s1">&lt;/style&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/head&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;body&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;div class="container"&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;h1&gt;MicroTask Platform&lt;/h1&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;div class="banner"&gt;</span></p>
+<p class="p1"><span class="s1">&lt;strong&gt;Featured Project:&lt;/strong&gt; AI Training Data Tasks&lt;br&gt;</span></p>
+<p class="p1"><span class="s1">&lt;strong&gt;Advertised Earning Potential:&lt;/strong&gt; Up to $15.00/hour</span></p>
+<p class="p1"><span class="s1">&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;div class="card"&gt;</span></p>
+<p class="p1"><span class="s1">&lt;div class="timer" id="globalTimer"&gt;10:00&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">&lt;div&gt;Session ends automatically when the timer reaches zero.&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;!-- LOGIN --&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;div id="loginScreen"&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;div class="card"&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;h2&gt;Worker Registration&lt;/h2&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;p&gt;Please enter your initials.&lt;/p&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;input id="workerInitials" maxlength="10" placeholder="e.g. RB"&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;button onclick="startQualification()"&gt;</span></p>
+<p class="p1"><span class="s1">Begin Qualification Assessment</span></p>
+<p class="p1"><span class="s1">&lt;/button&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;!-- QUALIFICATION --&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;div id="qualificationScreen" class="hidden"&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;h2&gt;Qualification Assessment&lt;/h2&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;p&gt;</span></p>
+<p class="p1"><span class="s1">Workers must achieve at least 4 out of 5 correct answers to access available tasks.</span></p>
+<p class="p1"><span class="s1">&lt;/p&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;div id="qualificationQuestion"&gt;&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;!-- LOCKOUT --&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;div id="lockoutScreen" class="hidden center"&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;h2&gt;Not Currently Qualified&lt;/h2&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;p&gt;</span></p>
+<p class="p1"><span class="s1">Your qualification score did not meet platform requirements.</span></p>
+<p class="p1"><span class="s1">&lt;/p&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;p&gt;</span></p>
+<p class="p1"><span class="s1">You may reattempt the qualification assessment after the countdown.</span></p>
+<p class="p1"><span class="s1">&lt;/p&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;h1 id="lockoutTimer"&gt;60&lt;/h1&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;!-- WORK --&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;div id="workScreen" class="hidden"&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;div class="stats"&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;div class="stat"&gt;</span></p>
+<p class="p1"><span class="s1">&lt;div&gt;Earnings&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">&lt;strong id="earnings"&gt;$0.00&lt;/strong&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;div class="stat"&gt;</span></p>
+<p class="p1"><span class="s1">&lt;div&gt;Completed&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">&lt;strong id="completed"&gt;0&lt;/strong&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;div class="stat"&gt;</span></p>
+<p class="p1"><span class="s1">&lt;div&gt;Approved&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">&lt;strong id="approved"&gt;0&lt;/strong&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;div class="stat"&gt;</span></p>
+<p class="p1"><span class="s1">&lt;div&gt;Rejected&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">&lt;strong id="rejected"&gt;0&lt;/strong&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;div class="stat"&gt;</span></p>
+<p class="p1"><span class="s1">&lt;div&gt;Approval Rate&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">&lt;strong id="approvalRate"&gt;100%&lt;/strong&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;div class="stat"&gt;</span></p>
+<p class="p1"><span class="s1">&lt;div&gt;Hourly Rate&lt;/div&gt;</span></p>
+<p class="p1"><span class="s1">&lt;strong id="hourlyRate"&gt;$0.00&lt;/strong&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;div class="card"&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;h3 id="taskType"&gt;&lt;/h3&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;p id="taskText"&gt;&lt;/p&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;div id="taskButtons"&gt;&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;p&gt;</span></p>
+<p class="p1"><span class="s1">&lt;strong&gt;Reward:&lt;/strong&gt;</span></p>
+<p class="p1"><span class="s1">$&lt;span id="taskPay"&gt;&lt;/span&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/p&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;div id="taskFeedback"&gt;&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;!-- END --&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;div id="endScreen" class="hidden"&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;h2&gt;Session Complete&lt;/h2&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;div class="card"&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;p&gt;&lt;strong&gt;Worker:&lt;/strong&gt; &lt;span id="finalWorker"&gt;&lt;/span&gt;&lt;/p&gt;</span></p>
+<p class="p1"><span class="s1">&lt;p&gt;&lt;strong&gt;Tasks Completed:&lt;/strong&gt; &lt;span id="finalCompleted"&gt;&lt;/span&gt;&lt;/p&gt;</span></p>
+<p class="p1"><span class="s1">&lt;p&gt;&lt;strong&gt;Approved:&lt;/strong&gt; &lt;span id="finalApproved"&gt;&lt;/span&gt;&lt;/p&gt;</span></p>
+<p class="p1"><span class="s1">&lt;p&gt;&lt;strong&gt;Rejected:&lt;/strong&gt; &lt;span id="finalRejected"&gt;&lt;/span&gt;&lt;/p&gt;</span></p>
+<p class="p1"><span class="s1">&lt;p&gt;&lt;strong&gt;Total Earnings:&lt;/strong&gt; $&lt;span id="finalEarnings"&gt;&lt;/span&gt;&lt;/p&gt;</span></p>
+<p class="p1"><span class="s1">&lt;p&gt;&lt;strong&gt;Equivalent Hourly Wage:&lt;/strong&gt; $&lt;span id="finalHourly"&gt;&lt;/span&gt;&lt;/p&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;button onclick="submitResults()"&gt;</span></p>
+<p class="p1"><span class="s1">Submit Results</span></p>
+<p class="p1"><span class="s1">&lt;/button&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;div id="submissionStatus"&gt;&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;/div&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;script&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">const FORM_URL =</span></p>
+<p class="p1"><span class="s1">"https://docs.google.com/forms/d/e/1FAIpQLSeipJbwg-P0OfIeeGoxLlwNy92zSWwuhqFwXjok5RweygMuIg/formResponse";</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">const TOTAL_TIME = 600;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">let initials = "";</span></p>
+<p class="p1"><span class="s1">let completed = 0;</span></p>
+<p class="p1"><span class="s1">let approved = 0;</span></p>
+<p class="p1"><span class="s1">let rejected = 0;</span></p>
+<p class="p1"><span class="s1">let earnings = 0;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">let sessionRemaining = TOTAL_TIME;</span></p>
+<p class="p1"><span class="s1">let sessionStarted = Date.now();</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">let qualIndex = 0;</span></p>
+<p class="p1"><span class="s1">let qualCorrect = 0;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">const qualificationQuestions = [</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">{</span></p>
+<p class="p1"><span class="s1">q:"A photo contains a dog. Which label should be selected?",</span></p>
+<p class="p1"><span class="s1">options:["Dog","Chair","Car"],</span></p>
+<p class="p1"><span class="s1">answer:"Dog"</span></p>
+<p class="p1"><span class="s1">},</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">{</span></p>
+<p class="p1"><span class="s1">q:"Review: 'Excellent service and fast delivery.'",</span></p>
+<p class="p1"><span class="s1">options:["Positive","Negative"],</span></p>
+<p class="p1"><span class="s1">answer:"Positive"</span></p>
+<p class="p1"><span class="s1">},</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">{</span></p>
+<p class="p1"><span class="s1">q:"Review: 'Very disappointing experience.'",</span></p>
+<p class="p1"><span class="s1">options:["Positive","Negative"],</span></p>
+<p class="p1"><span class="s1">answer:"Negative"</span></p>
+<p class="p1"><span class="s1">},</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">{</span></p>
+<p class="p1"><span class="s1">q:"The item shown is a bicycle.",</span></p>
+<p class="p1"><span class="s1">options:["Bicycle","Laptop"],</span></p>
+<p class="p1"><span class="s1">answer:"Bicycle"</span></p>
+<p class="p1"><span class="s1">},</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">{</span></p>
+<p class="p1"><span class="s1">q:"Comment: 'You are stupid.' Should it be flagged?",</span></p>
+<p class="p1"><span class="s1">options:["Flag","Do Not Flag"],</span></p>
+<p class="p1"><span class="s1">answer:"Flag"</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">];</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">const tasks = [</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">{</span></p>
+<p class="p1"><span class="s1">type:"Image Labeling",</span></p>
+<p class="p1"><span class="s1">text:"A user uploaded a photograph of a cat.",</span></p>
+<p class="p1"><span class="s1">options:["Cat","Dog","Car","Tree"],</span></p>
+<p class="p1"><span class="s1">answer:"Cat",</span></p>
+<p class="p1"><span class="s1">pay:0.03</span></p>
+<p class="p1"><span class="s1">},</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">{</span></p>
+<p class="p1"><span class="s1">type:"Image Labeling",</span></p>
+<p class="p1"><span class="s1">text:"The image clearly shows a bicycle.",</span></p>
+<p class="p1"><span class="s1">options:["Laptop","Bicycle","Table","Shoe"],</span></p>
+<p class="p1"><span class="s1">answer:"Bicycle",</span></p>
+<p class="p1"><span class="s1">pay:0.03</span></p>
+<p class="p1"><span class="s1">},</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">{</span></p>
+<p class="p1"><span class="s1">type:"Image Labeling",</span></p>
+<p class="p1"><span class="s1">text:"The image contains a tree.",</span></p>
+<p class="p1"><span class="s1">options:["Tree","Boat","Cat","Bottle"],</span></p>
+<p class="p1"><span class="s1">answer:"Tree",</span></p>
+<p class="p1"><span class="s1">pay:0.03</span></p>
+<p class="p1"><span class="s1">},</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">{</span></p>
+<p class="p1"><span class="s1">type:"Sentiment Analysis",</span></p>
+<p class="p1"><span class="s1">text:"'The product works perfectly and arrived quickly.'",</span></p>
+<p class="p1"><span class="s1">options:["Positive","Neutral","Negative"],</span></p>
+<p class="p1"><span class="s1">answer:"Positive",</span></p>
+<p class="p1"><span class="s1">pay:0.04</span></p>
+<p class="p1"><span class="s1">},</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">{</span></p>
+<p class="p1"><span class="s1">type:"Sentiment Analysis",</span></p>
+<p class="p1"><span class="s1">text:"'The product was acceptable but unremarkable.'",</span></p>
+<p class="p1"><span class="s1">options:["Positive","Neutral","Negative"],</span></p>
+<p class="p1"><span class="s1">answer:"Neutral",</span></p>
+<p class="p1"><span class="s1">pay:0.04</span></p>
+<p class="p1"><span class="s1">},</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">{</span></p>
+<p class="p1"><span class="s1">type:"Sentiment Analysis",</span></p>
+<p class="p1"><span class="s1">text:"'The product broke immediately after use.'",</span></p>
+<p class="p1"><span class="s1">options:["Positive","Neutral","Negative"],</span></p>
+<p class="p1"><span class="s1">answer:"Negative",</span></p>
+<p class="p1"><span class="s1">pay:0.04</span></p>
+<p class="p1"><span class="s1">},</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">{</span></p>
+<p class="p1"><span class="s1">type:"Product Categorization",</span></p>
+<p class="p1"><span class="s1">text:"Running Shoes",</span></p>
+<p class="p1"><span class="s1">options:["Footwear","Furniture","Electronics"],</span></p>
+<p class="p1"><span class="s1">answer:"Footwear",</span></p>
+<p class="p1"><span class="s1">pay:0.02</span></p>
+<p class="p1"><span class="s1">},</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">{</span></p>
+<p class="p1"><span class="s1">type:"Product Categorization",</span></p>
+<p class="p1"><span class="s1">text:"Wireless Keyboard",</span></p>
+<p class="p1"><span class="s1">options:["Kitchen","Electronics","Clothing"],</span></p>
+<p class="p1"><span class="s1">answer:"Electronics",</span></p>
+<p class="p1"><span class="s1">pay:0.02</span></p>
+<p class="p1"><span class="s1">},</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">{</span></p>
+<p class="p1"><span class="s1">type:"Content Review",</span></p>
+<p class="p1"><span class="s1">text:"Should this be flagged? 'You're an idiot.'",</span></p>
+<p class="p1"><span class="s1">options:["Flag","Do Not Flag"],</span></p>
+<p class="p1"><span class="s1">answer:"Flag",</span></p>
+<p class="p1"><span class="s1">pay:0.02</span></p>
+<p class="p1"><span class="s1">},</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">{</span></p>
+<p class="p1"><span class="s1">type:"Content Review",</span></p>
+<p class="p1"><span class="s1">text:"Should this be flagged? 'Thank you for the helpful information.'",</span></p>
+<p class="p1"><span class="s1">options:["Flag","Do Not Flag"],</span></p>
+<p class="p1"><span class="s1">answer:"Do Not Flag",</span></p>
+<p class="p1"><span class="s1">pay:0.02</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">];</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">function startQualification(){</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">initials =</span></p>
+<p class="p1"><span class="s1">document.getElementById("workerInitials").value.trim().toUpperCase();</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">if(initials.length===0){</span></p>
+<p class="p1"><span class="s1">alert("Please enter your initials.");</span></p>
+<p class="p1"><span class="s1">return;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">document.getElementById("loginScreen").classList.add("hidden");</span></p>
+<p class="p1"><span class="s1">document.getElementById("qualificationScreen").classList.remove("hidden");</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">qualIndex = 0;</span></p>
+<p class="p1"><span class="s1">qualCorrect = 0;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">showQualificationQuestion();</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">function showQualificationQuestion(){</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">const q = qualificationQuestions[qualIndex];</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">let html =</span></p>
+<p class="p1"><span class="s1">'&lt;div class="card"&gt;&lt;p&gt;'+q.q+'&lt;/p&gt;';</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">q.options.forEach(option =&gt; {</span></p>
+<p class="p1"><span class="s1">html +=</span></p>
+<p class="p1"><span class="s1">'&lt;button onclick="answerQualification(\''+</span></p>
+<p class="p1"><span class="s1">option.replace(/'/g,"\\'")+</span></p>
+<p class="p1"><span class="s1">'\')"&gt;'+option+'&lt;/button&gt;';</span></p>
+<p class="p1"><span class="s1">});</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">html += '&lt;/div&gt;';</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">document.getElementById("qualificationQuestion").innerHTML = html;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">function answerQualification(answer){</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">if(answer===qualificationQuestions[qualIndex].answer){</span></p>
+<p class="p1"><span class="s1">qualCorrect++;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">qualIndex++;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">if(qualIndex &lt; qualificationQuestions.length){</span></p>
+<p class="p1"><span class="s1">showQualificationQuestion();</span></p>
+<p class="p1"><span class="s1">return;</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">if(qualCorrect &gt;= 4){</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">document.getElementById("qualificationScreen").classList.add("hidden");</span></p>
+<p class="p1"><span class="s1">document.getElementById("workScreen").classList.remove("hidden");</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">loadTask();</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">} else {</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">startLockout();</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">function startLockout(){</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">document.getElementById("qualificationScreen").classList.add("hidden");</span></p>
+<p class="p1"><span class="s1">document.getElementById("lockoutScreen").classList.remove("hidden");</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">let remaining = 60;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">document.getElementById("lockoutTimer").textContent = remaining;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">const lockoutInterval = setInterval(() =&gt; {</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">remaining--;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">document.getElementById("lockoutTimer").textContent = remaining;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">if(remaining &lt;= 0){</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">clearInterval(lockoutInterval);</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">document.getElementById("lockoutScreen").classList.add("hidden");</span></p>
+<p class="p1"><span class="s1">document.getElementById("qualificationScreen").classList.remove("hidden");</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">qualIndex = 0;</span></p>
+<p class="p1"><span class="s1">qualCorrect = 0;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">showQualificationQuestion();</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">},1000);</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">let currentTask;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">function randomTask(){</span></p>
+<p class="p1"><span class="s1">return tasks[Math.floor(Math.random()*tasks.length)];</span></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">function loadTask(){</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">currentTask = randomTask();</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">document.getElementById("taskType").textContent =</span></p>
+<p class="p1"><span class="s1">currentTask.type;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">document.getElementById("taskText").textContent =</span></p>
+<p class="p1"><span class="s1">currentTask.text;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">document.getElementById("taskPay").textContent =</span></p>
+<p class="p1"><span class="s1">currentTask.pay.toFixed(2);</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">let html = "";</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">currentTask.options.forEach(option=&gt;{</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">html +=</span></p>
+<p class="p1"><span class="s1">'&lt;button onclick="submitTask(\''+</span></p>
+<p class="p1"><span class="s1">option.replace(/'/g,"\\'")+</span></p>
+<p class="p1"><span class="s1">'\')"&gt;'+option+'&lt;/button&gt;';</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">});</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">document.getElementById("taskButtons").innerHTML = html;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">function submitTask(answer){</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">completed++;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">if(answer === currentTask.answer){</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">if(Math.random() &lt; 0.10){</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">rejected++;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">document.getElementById("taskFeedback").innerHTML =</span></p>
+<p class="p1"><span class="s1">"&lt;p class='warning'&gt;Quality Audit: Task Rejected&lt;/p&gt;";</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">}else{</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">approved++;</span></p>
+<p class="p1"><span class="s1">earnings += currentTask.pay;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">document.getElementById("taskFeedback").innerHTML =</span></p>
+<p class="p1"><span class="s1">"&lt;p class='success'&gt;Task Approved&lt;/p&gt;";</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">}else{</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">rejected++;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">document.getElementById("taskFeedback").innerHTML =</span></p>
+<p class="p1"><span class="s1">"&lt;p class='error'&gt;Incorrect Submission&lt;/p&gt;";</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">updateStats();</span></p>
+<p class="p1"><span class="s1">loadTask();</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">function updateStats(){</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">document.getElementById("earnings").textContent =</span></p>
+<p class="p1"><span class="s1">"$"+earnings.toFixed(2);</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">document.getElementById("completed").textContent =</span></p>
+<p class="p1"><span class="s1">completed;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">document.getElementById("approved").textContent =</span></p>
+<p class="p1"><span class="s1">approved;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">document.getElementById("rejected").textContent =</span></p>
+<p class="p1"><span class="s1">rejected;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">const approvalRate =</span></p>
+<p class="p1"><span class="s1">completed===0</span></p>
+<p class="p1"><span class="s1">? 100</span></p>
+<p class="p1"><span class="s1">: Math.round((approved/completed)*100);</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">document.getElementById("approvalRate").textContent =</span></p>
+<p class="p1"><span class="s1">approvalRate + "%";</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">const hoursWorked =</span></p>
+<p class="p1"><span class="s1">((Date.now()-sessionStarted)/1000)/3600;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">const hourlyRate =</span></p>
+<p class="p1"><span class="s1">hoursWorked &gt; 0</span></p>
+<p class="p1"><span class="s1">? earnings/hoursWorked</span></p>
+<p class="p1"><span class="s1">: 0;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">document.getElementById("hourlyRate").textContent =</span></p>
+<p class="p1"><span class="s1">"$"+hourlyRate.toFixed(2);</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">function finishSession(){</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">document.getElementById("qualificationScreen").classList.add("hidden");</span></p>
+<p class="p1"><span class="s1">document.getElementById("lockoutScreen").classList.add("hidden");</span></p>
+<p class="p1"><span class="s1">document.getElementById("workScreen").classList.add("hidden");</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">document.getElementById("endScreen").classList.remove("hidden");</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">const hourlyEquivalent =</span></p>
+<p class="p1"><span class="s1">earnings * 6;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">document.getElementById("finalWorker").textContent =</span></p>
+<p class="p1"><span class="s1">initials;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">document.getElementById("finalCompleted").textContent =</span></p>
+<p class="p1"><span class="s1">completed;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">document.getElementById("finalApproved").textContent =</span></p>
+<p class="p1"><span class="s1">approved;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">document.getElementById("finalRejected").textContent =</span></p>
+<p class="p1"><span class="s1">rejected;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">document.getElementById("finalEarnings").textContent =</span></p>
+<p class="p1"><span class="s1">earnings.toFixed(2);</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">document.getElementById("finalHourly").textContent =</span></p>
+<p class="p1"><span class="s1">hourlyEquivalent.toFixed(2);</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">function submitResults(){</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">const formData = new FormData();</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">formData.append("entry.110412239", initials);</span></p>
+<p class="p1"><span class="s1">formData.append("entry.2008517054", completed);</span></p>
+<p class="p1"><span class="s1">formData.append("entry.696938252", approved);</span></p>
+<p class="p1"><span class="s1">formData.append("entry.693457703", rejected);</span></p>
+<p class="p1"><span class="s1">formData.append("entry.1276360105", earnings.toFixed(2));</span></p>
+<p class="p1"><span class="s1">formData.append("entry.136528013", (earnings*6).toFixed(2));</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">fetch(FORM_URL,{</span></p>
+<p class="p1"><span class="s1">method:"POST",</span></p>
+<p class="p1"><span class="s1">mode:"no-cors",</span></p>
+<p class="p1"><span class="s1">body:formData</span></p>
+<p class="p1"><span class="s1">});</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">document.getElementById("submissionStatus").innerHTML =</span></p>
+<p class="p1"><span class="s1">"&lt;p class='success'&gt;Results submitted. You may now close this page.&lt;/p&gt;";</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">const globalTimerInterval = setInterval(()=&gt;{</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">sessionRemaining--;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">const mins =</span></p>
+<p class="p1"><span class="s1">Math.floor(sessionRemaining/60);</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">const secs =</span></p>
+<p class="p1"><span class="s1">sessionRemaining%60;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">document.getElementById("globalTimer").textContent =</span></p>
+<p class="p1"><span class="s1">String(mins).padStart(2,"0")</span></p>
+<p class="p1"><span class="s1">+ ":"</span></p>
+<p class="p1"><span class="s1">+ String(secs).padStart(2,"0");</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">if(sessionRemaining &lt;= 0){</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">clearInterval(globalTimerInterval);</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">finishSession();</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">}</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">},1000);</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;/script&gt;</span></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1">&lt;/body&gt;</span></p>
+<p class="p1"><span class="s1">&lt;/html&gt;</span></p>
+</body>
+</html>
