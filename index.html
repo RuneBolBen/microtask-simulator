@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MicroTask Platform Simulator</title>
+
+<style>
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f4f6f9;
+    margin:0;
+    padding:20px;
+    color:#222;
+}
+
+.container{
+    max-width:1000px;
+    margin:auto;
+    background:white;
+    border-radius:12px;
+    padding:25px;
+    box-shadow:0 3px 12px rgba(0,0,0,.12);
+}
+
+h1,h2,h3{
+    margin-top:0;
+}
+
+.hidden{
+    display:none;
+}
+
+.timer{
+    font-size:30px;
+    font-weight:bold;
+    color:#c0392b;
+}
+
+.banner{
+    background:#ecf0f1;
+    padding:15px;
+    border-radius:8px;
+    margin-bottom:20px;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    gap:10px;
+    margin-bottom:20px;
+}
+
+.stat{
+    background:#f8f8f8;
+    border-radius:8px;
+    padding:10px;
+}
+
+.card{
+    background:#fff;
+    border:1px solid #ddd;
+    border-radius:8px;
+    padding:18px;
+    margin-top:15px;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    margin-top:8px;
+    cursor:pointer;
+    border:none;
+    background:#2c7be5;
+    color:white;
+    border-radius:6px;
+    font-size:15px;
+}
+
+button:hover{
+    background:#1f5fb5;
+}
+
+input{
+    width:100%;
+    padding:10px;
+    font-size:16px;
+    margin-top:10px;
+    box-sizing:border-box;
+}
+
+.warning{
+    color:#d35400;
+    font-weight:bold;
+}
+
+.error{
+    color:#c0392b;
+    font-weight:bold;
+}
+
+.success{
+    color:#27ae60;
+    font-weight:bold;
+}
+
+.center{
+    text-align:center;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>MicroTask Platform</h1>
+
+<div class="banner">
+<strong>Featured Project:</strong> AI Training Data Tasks<br>
+<strong>Advertised Earning Potential:</strong> Up to $15.00/hour
+</div>
+
+<div class="card">
+<div class="timer" id="globalTimer">10:00</div>
+<div>Session ends automatically when the timer reaches zero.</div>
+</div>
+
+<!-- LOGIN -->
+
+<div id="loginScreen">
+
+<div class="card">
+
+<h2>Worker Registration</h2>
+
+<p>Please enter your initials.</p>
+
+<input id="workerInitials" maxlength="10" placeholder="e.g. RB">
+
+<button onclick="startQualification()">
+Begin Qualification Assessment
+</button>
+
+</div>
+
+</div>
+
+<!-- QUALIFICATION -->
+
+<div id="qualificationScreen" class="hidden">
+
+<h2>Qualification Assessment</h2>
+
+<p>
+Workers must achieve at least 4 out of 5 correct answers to access available tasks.
+</p>
+
+<div id="qualificationQuestion"></div>
+
+</div>
+
+<!-- LOCKOUT -->
+
+<div id="lockoutScreen" class="hidden center">
+
+<h2>Not Currently Qualified</h2>
+
+<p>
+Your qualification score did not meet platform requirements.
+</p>
+
+<p>
+You may reattempt the qualification assessment after the countdown.
+</p>
+
+<h1 id="lockoutTimer">60</h1>
+
+</div>
+
+<!-- WORK -->
+
+<div id="workScreen" class="hidden">
+
+<div class="stats">
+
+<div class="stat">
+<div>Earnings</div>
+<strong id="earnings">$0.00</strong>
+</div>
+
+<div class="stat">
+<div>Completed</div>
+<strong id="completed">0</strong>
+</div>
+
+<div class="stat">
+<div>Approved</div>
+<strong id="approved">0</strong>
+</div>
+
+<div class="stat">
+<div>Rejected</div>
+<strong id="rejected">0</strong>
+</div>
+
+<div class="stat">
+<div>Approval Rate</div>
+<strong id="approvalRate">100%</strong>
+</div>
+
+<div class="stat">
+<div>Hourly Rate</div>
+<strong id="hourlyRate">$0.00</strong>
+</div>
+
+</div>
+
+<div class="card">
+
+<h3 id="taskType"></h3>
+
+<p id="taskText"></p>
+
+<div id="taskButtons"></div>
+
+<p>
+<strong>Reward:</strong>
+$<span id="taskPay"></span>
+</p>
+
+</div>
+
+<div id="taskFeedback"></div>
+
+</div>
+
+<!-- END -->
+
+<div id="endScreen" class="hidden">
+
+<h2>Session Complete</h2>
+
+<div class="card">
+
+<p><strong>Worker:</strong> <span id="finalWorker"></span></p>
+<p><strong>Tasks Completed:</strong> <span id="finalCompleted"></span></p>
+<p><strong>Approved:</strong> <span id="finalApproved"></span></p>
+<p><strong>Rejected:</strong> <span id="finalRejected"></span></p>
+<p><strong>Total Earnings:</strong> $<span id="finalEarnings"></span></p>
+<p><strong>Equivalent Hourly Wage:</strong> $<span id="finalHourly"></span></p>
+
+</div>
+
+<button onclick="submitResults()">
+Submit Results
+</button>
+
+<div id="submissionStatus"></div>
+
+</div>
+
+</div>
+
+<script>
+
+const FORM_URL =
+"https://docs.google.com/forms/d/e/1FAIpQLSeipJbwg-P0OfIeeGoxLlwNy92zSWwuhqFwXjok5RweygMuIg/formResponse";
+
+const TOTAL_TIME = 600;
+
+let initials = "";
+let completed = 0;
+let approved = 0;
+let rejected = 0;
+let earnings = 0;
+
+let sessionRemaining = TOTAL_TIME;
+let sessionStarted = Date.now();
+
+let qualIndex = 0;
+let qualCorrect = 0;
+
+const qualificationQuestions = [
+
+{
+q:"A photo contains a dog. Which label should be selected?",
+options:["Dog","Chair","Car"],
+answer:"Dog"
+},
+
+{
+q:"Review: 'Excellent service and fast delivery.'",
+options:["Positive","Negative"],
+answer:"Positive"
+},
+
+{
+q:"Review: 'Very disappointing experience.'",
+options:["Positive","Negative"],
+answer:"Negative"
+},
+
+{
+q:"The item shown is a bicycle.",
+options:["Bicycle","Laptop"],
+answer:"Bicycle"
+},
+
+{
+q:"Comment: 'You are stupid.' Should it be flagged?",
+options:["Flag","Do Not Flag"],
+answer:"Flag"
+}
+
+];
+
+const tasks = [
+
+{
+type:"Image Labeling",
+text:"A user uploaded a photograph of a cat.",
+options:["Cat","Dog","Car","Tree"],
+answer:"Cat",
+pay:0.03
+},
+
+{
+type:"Image Labeling",
+text:"The image clearly shows a bicycle.",
+options:["Laptop","Bicycle","Table","Shoe"],
+answer:"Bicycle",
+pay:0.03
+},
+
+{
+type:"Image Labeling",
+text:"The image contains a tree.",
+options:["Tree","Boat","Cat","Bottle"],
+answer:"Tree",
+pay:0.03
+},
+
+{
+type:"Sentiment Analysis",
+text:"'The product works perfectly and arrived quickly.'",
+options:["Positive","Neutral","Negative"],
+answer:"Positive",
+pay:0.04
+},
+
+{
+type:"Sentiment Analysis",
+text:"'The product was acceptable but unremarkable.'",
+options:["Positive","Neutral","Negative"],
+answer:"Neutral",
+pay:0.04
+},
+
+{
+type:"Sentiment Analysis",
+text:"'The product broke immediately after use.'",
+options:["Positive","Neutral","Negative"],
+answer:"Negative",
+pay:0.04
+},
+
+{
+type:"Product Categorization",
+text:"Running Shoes",
+options:["Footwear","Furniture","Electronics"],
+answer:"Footwear",
+pay:0.02
+},
+
+{
+type:"Product Categorization",
+text:"Wireless Keyboard",
+options:["Kitchen","Electronics","Clothing"],
+answer:"Electronics",
+pay:0.02
+},
+
+{
+type:"Content Review",
+text:"Should this be flagged? 'You're an idiot.'",
+options:["Flag","Do Not Flag"],
+answer:"Flag",
+pay:0.02
+},
+
+{
+type:"Content Review",
+text:"Should this be flagged? 'Thank you for the helpful information.'",
+options:["Flag","Do Not Flag"],
+answer:"Do Not Flag",
+pay:0.02
+}
+
+];
+
+function startQualification(){
+
+initials =
+document.getElementById("workerInitials").value.trim().toUpperCase();
+
+if(initials.length===0){
+alert("Please enter your initials.");
+return;
+}
+
+document.getElementById("loginScreen").classList.add("hidden");
+document.getElementById("qualificationScreen").classList.remove("hidden");
+
+qualIndex = 0;
+qualCorrect = 0;
+
+showQualificationQuestion();
+
+}
+
+function showQualificationQuestion(){
+
+const q = qualificationQuestions[qualIndex];
+
+let html =
+'<div class="card"><p>'+q.q+'</p>';
+
+q.options.forEach(option => {
+html +=
+'<button onclick="answerQualification(\''+
+option.replace(/'/g,"\\'")+
+'\')">'+option+'</button>';
+});
+
+html += '</div>';
+
+document.getElementById("qualificationQuestion").innerHTML = html;
+
+}
+
+function answerQualification(answer){
+
+if(answer===qualificationQuestions[qualIndex].answer){
+qualCorrect++;
+}
+
+qualIndex++;
+
+if(qualIndex < qualificationQuestions.length){
+showQualificationQuestion();
+return;
+}
+
+if(qualCorrect >= 4){
+
+document.getElementById("qualificationScreen").classList.add("hidden");
+document.getElementById("workScreen").classList.remove("hidden");
+
+loadTask();
+
+} else {
+
+startLockout();
+
+}
+
+}
+
+function startLockout(){
+
+document.getElementById("qualificationScreen").classList.add("hidden");
+document.getElementById("lockoutScreen").classList.remove("hidden");
+
+let remaining = 60;
+
+document.getElementById("lockoutTimer").textContent = remaining;
+
+const lockoutInterval = setInterval(() => {
+
+remaining--;
+
+document.getElementById("lockoutTimer").textContent = remaining;
+
+if(remaining <= 0){
+
+clearInterval(lockoutInterval);
+
+document.getElementById("lockoutScreen").classList.add("hidden");
+document.getElementById("qualificationScreen").classList.remove("hidden");
+
+qualIndex = 0;
+qualCorrect = 0;
+
+showQualificationQuestion();
+
+}
+
+},1000);
+
+}
+
+let currentTask;
+
+function randomTask(){
+return tasks[Math.floor(Math.random()*tasks.length)];
+}
+
+function loadTask(){
+
+currentTask = randomTask();
+
+document.getElementById("taskType").textContent =
+currentTask.type;
+
+document.getElementById("taskText").textContent =
+currentTask.text;
+
+document.getElementById("taskPay").textContent =
+currentTask.pay.toFixed(2);
+
+let html = "";
+
+currentTask.options.forEach(option=>{
+
+html +=
+'<button onclick="submitTask(\''+
+option.replace(/'/g,"\\'")+
+'\')">'+option+'</button>';
+
+});
+
+document.getElementById("taskButtons").innerHTML = html;
+
+}
+
+function submitTask(answer){
+
+completed++;
+
+if(answer === currentTask.answer){
+
+if(Math.random() < 0.10){
+
+rejected++;
+
+document.getElementById("taskFeedback").innerHTML =
+"<p class='warning'>Quality Audit: Task Rejected</p>";
+
+}else{
+
+approved++;
+earnings += currentTask.pay;
+
+document.getElementById("taskFeedback").innerHTML =
+"<p class='success'>Task Approved</p>";
+
+}
+
+}else{
+
+rejected++;
+
+document.getElementById("taskFeedback").innerHTML =
+"<p class='error'>Incorrect Submission</p>";
+
+}
+
+updateStats();
+loadTask();
+
+}
+
+function updateStats(){
+
+document.getElementById("earnings").textContent =
+"$"+earnings.toFixed(2);
+
+document.getElementById("completed").textContent =
+completed;
+
+document.getElementById("approved").textContent =
+approved;
+
+document.getElementById("rejected").textContent =
+rejected;
+
+const approvalRate =
+completed===0
+? 100
+: Math.round((approved/completed)*100);
+
+document.getElementById("approvalRate").textContent =
+approvalRate + "%";
+
+const hoursWorked =
+((Date.now()-sessionStarted)/1000)/3600;
+
+const hourlyRate =
+hoursWorked > 0
+? earnings/hoursWorked
+: 0;
+
+document.getElementById("hourlyRate").textContent =
+"$"+hourlyRate.toFixed(2);
+
+}
+
+function finishSession(){
+
+document.getElementById("qualificationScreen").classList.add("hidden");
+document.getElementById("lockoutScreen").classList.add("hidden");
+document.getElementById("workScreen").classList.add("hidden");
+
+document.getElementById("endScreen").classList.remove("hidden");
+
+const hourlyEquivalent =
+earnings * 6;
+
+document.getElementById("finalWorker").textContent =
+initials;
+
+document.getElementById("finalCompleted").textContent =
+completed;
+
+document.getElementById("finalApproved").textContent =
+approved;
+
+document.getElementById("finalRejected").textContent =
+rejected;
+
+document.getElementById("finalEarnings").textContent =
+earnings.toFixed(2);
+
+document.getElementById("finalHourly").textContent =
+hourlyEquivalent.toFixed(2);
+
+}
+
+function submitResults(){
+
+const formData = new FormData();
+
+formData.append("entry.110412239", initials);
+formData.append("entry.2008517054", completed);
+formData.append("entry.696938252", approved);
+formData.append("entry.693457703", rejected);
+formData.append("entry.1276360105", earnings.toFixed(2));
+formData.append("entry.136528013", (earnings*6).toFixed(2));
+
+fetch(FORM_URL,{
+method:"POST",
+mode:"no-cors",
+body:formData
+});
+
+document.getElementById("submissionStatus").innerHTML =
+"<p class='success'>Results submitted. You may now close this page.</p>";
+
+}
+
+const globalTimerInterval = setInterval(()=>{
+
+sessionRemaining--;
+
+const mins =
+Math.floor(sessionRemaining/60);
+
+const secs =
+sessionRemaining%60;
+
+document.getElementById("globalTimer").textContent =
+String(mins).padStart(2,"0")
++ ":"
++ String(secs).padStart(2,"0");
+
+if(sessionRemaining <= 0){
+
+clearInterval(globalTimerInterval);
+
+finishSession();
+
+}
+
+},1000);
+
+</script>
+
+</body>
+</html>
